@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Local application data
+backend/mediguard.db
+backend/mediguard.db-shm
+backend/mediguard.db-wal
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MediGuard | Storage Monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-state="empty">
+
+<header class="top">
+  <div class="brand">MediGuard</div>
+  <div class="conn" role="status"><span class="dot"></span><span id="connText">Connecting</span></div>
+  <div class="ranges" role="group" aria-label="Time range">
+    <button data-min="15">15 min</button>
+    <button data-min="60" aria-pressed="true">1 hour</button>
+    <button data-min="360">6 hours</button>
+    <button data-min="1440">24 hours</button>
+    <button data-min="10080">7 days</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1 id="headline">Waiting for the first reading.</h1>
+    <p id="subline">Power on the ESP32 and check that it can reach this server.</p>
+  </section>
+
+  <section class="readings" aria-label="Current readings">
+    <div class="reading">
+      <h2>Temperature</h2>
+      <div class="value"><span id="tempVal">–</span><small>°C</small></div>
+      <div class="gauge" id="tempGauge">
+        <div class="track"><div class="band"></div><div class="marker"></div></div>
+        <div class="ends"><span class="lo"></span><span class="hi"></span></div>
+      </div>
+    </div>
+    <div class="reading">
+      <h2>Humidity</h2>
+      <div class="value"><span id="humVal">–</span><small>%</small></div>
+      <div class="gauge" id="humGauge">
+        <div class="track"><div class="band"></div><div class="marker"></div></div>
+        <div class="ends"><span class="lo"></span><span class="hi"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <dl class="summary" id="summary"></dl>
+
+  <section class="charts" aria-label="History">
+    <div class="chartbox">
+      <h3>Temperature over time</h3>
+      <p class="legend"><span><i style="background:var(--ok-soft);box-shadow:inset 0 0 0 1px var(--ok)"></i>Allowed range</span><span><i style="background:var(--ice)"></i>Cooling active</span></p>
+      <div class="chart" id="tempChart"></div>
+    </div>
+    <div class="chartbox">
+      <h3>Humidity over time</h3>
+      <p class="legend"><span><i style="background:var(--ok-soft);box-shadow:inset 0 0 0 1px var(--ok)"></i>Allowed range</span><span><i style="background:var(--ice)"></i>Cooling active</span></p>
+      <div class="chart" id="humChart"></div>
+    </div>
+  </section>
+
+  <section class="lower">
+    <div>
+      <h2>Alerts</h2>
+      <ul id="alerts"><li class="empty">Loading alerts.</li></ul>
+    </div>
+    <div>
+      <h2>Allowed range</h2>
+      <form id="limitsForm">
+        <label>Lowest temperature (°C)<input id="temp_min" type="number" step="0.1" required></label>
+        <label>Highest temperature (°C)<input id="temp_max" type="number" step="0.1" required></label>
+        <label>Lowest humidity (%)<input id="hum_min" type="number" step="1" required></label>
+        <label>Highest humidity (%)<input id="hum_max" type="number" step="1" required></label>
+        <div class="actions"><button class="primary" type="submit">Save limits</button></div>
+      </form>
+      <div class="links">
+        <a id="exportRange" href="#">Download this time range (CSV)</a>
+        <a id="exportAll" href="/api/export.csv?minutes=0">Download all data (CSV)</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
